@@ -1,8 +1,8 @@
 {
   "name": "com.palantir.fde.bridge",
   "description": "FDE Bridge native messaging host",
-  "path": "/path/to/node",
-  "args": ["/path/to/native-host/server.js"],
+  "path": "/opt/homebrew/bin/node",
+  "args": ["/Users/amiel.wexler/repos/claude-fde/native-host/server.js"],
   "type": "stdio",
   "allowed_origins": [
     "chrome-extension://mmoolbcfmhiijogpplbcepihjpacmfaj/"
