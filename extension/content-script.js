@@ -11,22 +11,19 @@
 //   document.querySelectorAll('button[disabled]')  — check send button
 //
 const SELECTORS = {
-  // Chat input: try Slate.js contenteditable, then generic contenteditable, then textarea
+  // Chat input — verified: Blueprint.js textarea (bp6-text-area ai-fde-components class)
   chatInput:        [
-    '[data-testid="chat-input"]',
-    '[contenteditable="true"][data-slate-editor]',
-    '[contenteditable="true"][role="textbox"]',
-    'textarea[data-testid]',
+    'textarea.bp6-text-area',
+    'textarea[class*="ai-fde-components"]',
     'textarea[placeholder*="message" i]',
     'textarea[placeholder*="prompt" i]',
   ].join(', '),
 
-  // Submit / send button
+  // Submit / send button — verified: aria-label="Send message" (Blueprint.js bp6-button)
   sendButton:       [
-    '[data-testid="send-button"]',
+    'button[aria-label="Send message"]',
     'button[aria-label="Send"]',
     'button[aria-label="Submit"]',
-    'button[type="submit"]',
   ].join(', '),
 
   // AI response message containers — pick the last one after response completes
@@ -38,17 +35,18 @@ const SELECTORS = {
     '[role="article"][data-message-author-role="assistant"]',
   ].join(', '),
 
-  // New session / new conversation control
+  // New session: open session list sidebar, then click new session within it
   newSessionButton: [
-    '[data-testid="new-conversation"]',
-    '[data-testid="new-session"]',
     'button[aria-label="New session"]',
     'button[aria-label="New conversation"]',
   ].join(', '),
 
-  // Settings panel toggle (to access tool toggles)
+  // Session list sidebar toggle — verified: aria-label="Open session list"
+  sessionListButton: 'button[aria-label="Open session list"]',
+
+  // Settings / tools panel toggle — verified: aria-label="Select tools"
   settingsButton:   [
-    '[data-testid="settings-panel-toggle"]',
+    'button[aria-label="Select tools"]',
     'button[aria-label="Settings"]',
     'button[aria-label="Configure tools"]',
   ].join(', '),

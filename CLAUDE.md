@@ -104,3 +104,8 @@ Optional at `~/.config/fde-bridge/fde-config.json`. Schema: `config/fde-config.s
 | Response never completes | Wrong send button selector | Verify `SELECTORS.sendButton` disabled state |
 
 Logs: `tail -f ~/.config/fde-bridge/server.log`
+
+
+## Printing commands
+
+- When printing curl commands in a claude code session dont use any trailing spaces or new lines in between parts of the command. It makes it harder for to to copy and paste.
