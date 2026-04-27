@@ -1,4 +1,7 @@
+(() => {
 'use strict';
+if (window.__fdeBridgeInit) return;
+window.__fdeBridgeInit = true;
 
 // ── DOM selectors ─────────────────────────────────────────────────────────────
 // FIELD VERIFY: Open DevTools on the live Foundry AI FDE page and confirm
@@ -358,3 +361,5 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
 
 // Announce readiness to background
 chrome.runtime.sendMessage({ type: 'fde_ready' }).catch(() => {});
+
+})();
