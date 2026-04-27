@@ -1,0 +1,14 @@
+{
+  "$schema": "../config/fde-config.schema.json",
+  "tools": {
+    "transforms": true,
+    "ontologyEditing": true,
+    "codeRepo": true,
+    "functions": false,
+    "pipelineBuilder": false,
+    "osdk": true
+  },
+  "approvalMode": "auto-approve-branch",
+  "launchMode": "code",
+  "branchName": "feature/claude-automation"
+}

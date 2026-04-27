@@ -1,0 +1,13 @@
+{
+  "name": "fde-bridge-native-host",
+  "version": "1.0.0",
+  "description": "Native messaging host for FDE Bridge Chrome extension",
+  "main": "server.js",
+  "engines": { "node": ">=18.0.0" },
+  "scripts": {
+    "start": "node server.js",
+    "install-host": "bash install.sh"
+  },
+  "dependencies": {},
+  "license": "MIT"
+}

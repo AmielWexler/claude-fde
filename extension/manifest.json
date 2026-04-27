@@ -1,0 +1,34 @@
+{
+  "manifest_version": 3,
+  "name": "FDE Bridge",
+  "version": "1.0.0",
+  "description": "Headless API bridge for Palantir AI FDE — enables Claude Code automation",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyCIxhxv73kiOVVVP/PhoMSXWAoAW2GfQY9Lbb6ALQ2xbw/0uRhaJqqVLqcBv5iAm+xdYtQCv4EuczLxufl+MFPfd3rfaJbqWznldQi3h82Ss0mZSaRA/5uW9v5zvRfaFMhlFB6cZOXQ9iQ1bvSxVE11rkB+fcbG8mQCC89fo9dw2VMBoGm3IS4RMlvDafLTpkjy6iy2Q+mM7Uk29B5XiYzWYAk0a5mpk25i82VosMuvE54CqTdVwqU0nx7INz/n3VuGoKizII63oooUkNP975N04JBSkYDaG5pJBop6QfLFSdyAsy91AyTdD83U3WcEl6oz4gDWlwEs2s3wZqc751QIDAQAB",
+  "permissions": [
+    "nativeMessaging",
+    "tabs",
+    "storage",
+    "alarms",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://*.palantirfoundry.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.palantirfoundry.com/*"
+      ],
+      "js": ["content-script.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "FDE Bridge"
+  }
+}

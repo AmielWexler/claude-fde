@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "fde-config.schema.json",
+  "title": "FDE Bridge Configuration",
+  "description": "Configures which AI FDE tools are enabled, approval mode, and launch mode for automated sessions",
+  "type": "object",
+  "properties": {
+    "$schema": { "type": "string" },
+    "tools": {
+      "type": "object",
+      "description": "Tool toggles for the FDE session. Set to true to enable, false to disable.",
+      "properties": {
+        "transforms":      { "type": "boolean", "description": "Pipeline Builder / Transforms tool" },
+        "ontologyEditing": { "type": "boolean", "description": "Ontology editing tool" },
+        "codeRepo":        { "type": "boolean", "description": "Code repository access tool" },
+        "functions":       { "type": "boolean", "description": "Functions tool" },
+        "pipelineBuilder": { "type": "boolean", "description": "Pipeline Builder tool" },
+        "osdk":            { "type": "boolean", "description": "OSDK / React app scaffolding tool" }
+      },
+      "additionalProperties": false
+    },
+    "approvalMode": {
+      "type": "string",
+      "enum": ["auto-approve-branch", "auto-approve-unbranched", "require-approval"],
+      "description": "auto-approve-branch: auto-approve actions on a branch; auto-approve-unbranched: auto-approve all; require-approval: require human approval for each action"
+    },
+    "launchMode": {
+      "type": "string",
+      "enum": ["data-integration", "ontology", "osdk-react", "code"],
+      "description": "Which FDE workspace mode to launch in"
+    },
+    "branchName": {
+      "type": "string",
+      "description": "Optional branch name to use in the FDE session"
+    }
+  },
+  "additionalProperties": false
+}

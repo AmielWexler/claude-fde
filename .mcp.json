@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "fde-bridge": {
+      "command": "node",
+      "args": ["mcp-tool/dist/index.js"],
+      "env": {
+        "FDE_BRIDGE_TOKEN": ""
+      }
+    }
+  }
+}
