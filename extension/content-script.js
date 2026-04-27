@@ -69,6 +69,27 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+// Poll until the send button exists and is not disabled, then return it.
+// Returns null if the timeout expires without the button becoming enabled.
+function waitForSendButtonEnabled(timeoutMs = 3000) {
+  const btn = document.querySelector(SELECTORS.sendButton);
+  if (btn && !btn.disabled) return Promise.resolve(btn);
+
+  return new Promise((resolve) => {
+    const deadline = Date.now() + timeoutMs;
+    const interval = setInterval(() => {
+      const b = document.querySelector(SELECTORS.sendButton);
+      if (b && !b.disabled) {
+        clearInterval(interval);
+        resolve(b);
+      } else if (Date.now() >= deadline) {
+        clearInterval(interval);
+        resolve(null);
+      }
+    }, 50);
+  });
+}
+
 function waitForElement(selector, timeoutMs = 10_000) {
   const el = document.querySelector(selector);
   if (el) return Promise.resolve(el);
@@ -97,11 +118,13 @@ function injectText(element, text) {
     )?.set;
     if (nativeSetter) {
       nativeSetter.call(element, text);
-      element.dispatchEvent(new Event('input', { bubbles: true }));
+      element.dispatchEvent(new Event('input',  { bubbles: true }));
+      element.dispatchEvent(new Event('change', { bubbles: true }));
       return true;
     }
     element.value = text;
-    element.dispatchEvent(new Event('input', { bubbles: true }));
+    element.dispatchEvent(new Event('input',  { bubbles: true }));
+    element.dispatchEvent(new Event('change', { bubbles: true }));
     return true;
   }
 
@@ -305,15 +328,16 @@ async function executePrompt(payload) {
   // Inject prompt text
   injectText(input, prompt);
 
-  // Brief pause for React to process the input before we click Send
-  await sleep(250);
-
-  // Submit
-  const sendBtn = document.querySelector(SELECTORS.sendButton);
+  // Wait for the send button to become enabled (React needs to process the value change)
+  const sendBtn = await waitForSendButtonEnabled(3000);
   if (!sendBtn) {
-    throw new Error(`Send button not found. FIELD VERIFY selector: ${SELECTORS.sendButton}`);
+    // Fallback: try keyboard shortcut in case button state detection failed
+    input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, metaKey: true }));
+    input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, ctrlKey: true }));
+    await sleep(300);
+  } else {
+    sendBtn.click();
   }
-  sendBtn.click();
 
   // Wait for response to complete
   const responseText = await waitForResponseCompletion(timeout_ms ?? 300_000);
